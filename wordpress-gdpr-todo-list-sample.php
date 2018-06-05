@@ -57,3 +57,26 @@ function todo_list_exporter( $email_address, $page = 1 ) {
 		'done'	=> true
 	);
 }
+
+add_filter( 'wp_privacy_personal_data_erasers', 'register_todo_list_eraser' );
+
+function register_todo_list_eraser( $erasers ) {
+	$erasers['todo-list'] = array(
+		'eraser_friendly_name'	=> __( 'Todo List' ),
+		'callback'				=> 'todo_list_eraser'
+	);
+	return $erasers;
+}
+
+function todo_list_eraser( $email_address, $page = 1 ) { 
+	global $wpdb;
+
+	$removed = $wpdb->delete( 'todo_list', array( 'email' => $email_address ) );
+
+	return array(
+		'items_removed'  => $removed,
+		'items_retained' => false,
+		'messages'       => array(),
+		'done'           => true,
+	);
+}
