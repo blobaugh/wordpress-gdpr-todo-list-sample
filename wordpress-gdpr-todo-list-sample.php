@@ -48,10 +48,10 @@ function todo_list_exporter( $email_address, $page = 1 ) {
 			'group_id'		=> $group_id,
 			'group_label'	=> $group_label,
 			'item_id'		=> $item->id,
-			'data'			=> array()
+			'data'			=> $item_data
 		);
 	}
-
+	
 	return array(
 		'data'	=> $export_items,
 		'done'	=> true
